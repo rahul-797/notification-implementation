@@ -30,12 +30,6 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: Text("Task Details"),
         elevation: 10,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(Icons.notifications),
-          ),
-        ],
       ),
       body: _todoList == null || _todoList!.isEmpty
           ? const Center(child: CircularProgressIndicator())
