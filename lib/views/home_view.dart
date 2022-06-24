@@ -67,9 +67,9 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               children: [
                                 TextSpan(
-                                  text: TodoModel().title,
+                                  text: _todoList![index].title,
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 20,
                                     color: Colors.black,
                                   ),
                                 ),
