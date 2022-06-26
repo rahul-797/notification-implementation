@@ -1,4 +1,5 @@
 import 'package:api/views/signin_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:api/services/api_service.dart';
@@ -25,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
 
   void _getData() async {
     _todoList = await (ApiService().fetchTodo());
-    Future.delayed(Duration(seconds: 1)).then((value) => setState(() {}));
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
@@ -37,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
           letterSpacing: 2,
           fontSize: 24,
           decorationStyle: TextDecorationStyle.wavy,
-          decorationThickness: 3,
+          decorationThickness: 2,
           decoration: TextDecoration.lineThrough,
         ),
         flexibleSpace: Container(
@@ -52,10 +53,10 @@ class _HomeViewState extends State<HomeView> {
         elevation: 10,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () async {
               await _authService.signOut();
-              Get.offAll(() => SigninView());
+              Get.offAll(() => const SigninView());
             },
           ),
         ],
@@ -65,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
           : Padding(
               padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: _todoList!.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -75,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     color: Colors.white,
-                    margin: EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -84,14 +85,14 @@ class _HomeViewState extends State<HomeView> {
                           child: RichText(
                             text: TextSpan(
                               text: "Task name: \n",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
                               children: [
                                 TextSpan(
                                   text: _todoList![index].title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
                                   ),

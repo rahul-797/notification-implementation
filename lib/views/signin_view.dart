@@ -1,6 +1,7 @@
 import 'package:api/services/auth_service.dart';
 import 'package:api/views/home_view.dart';
 import 'package:api/views/register_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class _SigninViewState extends State<SigninView> {
         elevation: 10,
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -103,7 +104,7 @@ class _SigninViewState extends State<SigninView> {
                               ),
                             ),
                             child: const Padding(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Text(
                                 "Sign in",
                                 style: TextStyle(
@@ -144,7 +145,7 @@ class _SigninViewState extends State<SigninView> {
                                     const TextStyle(color: Colors.blueAccent),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Get.offAll(
-                                        () => RegisterView(),
+                                        () => const RegisterView(),
                                         transition: Transition.topLevel,
                                       ),
                               ),
