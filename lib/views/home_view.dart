@@ -1,7 +1,10 @@
+import 'package:api/views/signin_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:api/services/api_service.dart';
+import 'package:api/services/auth_service.dart';
 import 'package:api/models/todo_model.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late List<TodoModel>? _todoList = [];
+  final _authService = AuthService();
 
   @override
   void initState() {
@@ -28,12 +32,31 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Task Details"),
+        title: const Text("Task Details"),
+        titleTextStyle: const TextStyle(
+          letterSpacing: 2,
+          fontSize: 24,
+          decorationStyle: TextDecorationStyle.wavy,
+          decorationThickness: 3,
+          decoration: TextDecoration.lineThrough,
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.indigo, Colors.blue],
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+            ),
+          ),
+        ),
         elevation: 10,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(Icons.notifications),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await _authService.signOut();
+              Get.offAll(() => SigninView());
+            },
           ),
         ],
       ),

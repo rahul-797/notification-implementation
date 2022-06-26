@@ -1,18 +1,18 @@
 import 'package:api/services/auth_service.dart';
 import 'package:api/views/home_view.dart';
-import 'package:api/views/register_view.dart';
+import 'package:api/views/signin_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SigninView extends StatefulWidget {
-  const SigninView({Key? key}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
-  State<SigninView> createState() => _SigninViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _SigninViewState extends State<SigninView> {
+class _RegisterViewState extends State<RegisterView> {
   final _authService = AuthService();
   final _formkey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -24,7 +24,7 @@ class _SigninViewState extends State<SigninView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign in"),
+        title: const Text("Register"),
         titleTextStyle: const TextStyle(
           letterSpacing: 2,
           fontSize: 24,
@@ -105,7 +105,7 @@ class _SigninViewState extends State<SigninView> {
                             child: const Padding(
                               padding: EdgeInsets.all(16),
                               child: Text(
-                                "Sign in",
+                                "Register",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -119,10 +119,10 @@ class _SigninViewState extends State<SigninView> {
                               setState(() => isLoading = true);
                               try {
                                 dynamic result = await _authService
-                                    .signinWithEmailPassword(email, password);
+                                    .registerWithEmailPassword(email, password);
                                 result == null
                                     ? setState(() {
-                                        error = "Wrong email or password";
+                                        error = "Enter a valid email address";
                                         isLoading = false;
                                       })
                                     : Get.offAll(() => const HomeView());
@@ -135,16 +135,16 @@ class _SigninViewState extends State<SigninView> {
                         const SizedBox(height: 16),
                         RichText(
                           text: TextSpan(
-                            text: "Don't have an account? ",
+                            text: "Already have an account? ",
                             style: const TextStyle(color: Colors.black87),
                             children: [
                               TextSpan(
-                                text: "Register Now!",
+                                text: "Sign in",
                                 style:
                                     const TextStyle(color: Colors.blueAccent),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Get.offAll(
-                                        () => RegisterView(),
+                                        () => SigninView(),
                                         transition: Transition.topLevel,
                                       ),
                               ),
