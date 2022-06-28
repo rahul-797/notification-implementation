@@ -4,7 +4,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'views/home_view.dart';
+import 'package:api/views/home_view.dart';
 import 'package:api/views/signin_view.dart';
 
 void main() async {

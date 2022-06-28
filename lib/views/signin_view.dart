@@ -1,5 +1,5 @@
 import 'package:api/services/auth_service.dart';
-import 'package:api/views/home_view.dart';
+import 'package:api/views/tasks_view.dart';
 import 'package:api/views/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -126,7 +126,7 @@ class _SigninViewState extends State<SigninView> {
                                         error = "Wrong email or password";
                                         isLoading = false;
                                       })
-                                    : Get.offAll(() => const HomeView());
+                                    : Get.offAll(() => const TasksView());
                               } catch (e) {
                                 print(e);
                               }

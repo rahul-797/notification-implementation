@@ -1,5 +1,5 @@
 import 'package:api/services/auth_service.dart';
-import 'package:api/views/home_view.dart';
+import 'package:api/views/tasks_view.dart';
 import 'package:api/views/signin_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +125,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         error = "Enter a valid email address";
                                         isLoading = false;
                                       })
-                                    : Get.offAll(() => const HomeView());
+                                    : Get.offAll(() => const TasksView());
                               } catch (e) {
                                 print(e);
                               }

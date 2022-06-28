@@ -1,10 +1,8 @@
-import 'package:api/views/signin_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
-import 'package:api/services/api_service.dart';
 import 'package:api/services/auth_service.dart';
-import 'package:api/models/todo_model.dart';
+import 'package:api/services/database_service.dart';
+import 'package:api/views/signin_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,25 +13,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late List<TodoModel>? _todoList = [];
-  final _authService = AuthService();
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _todoList = await (ApiService().fetchTodo());
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
+  final _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Task Details"),
+        title: const Text("Home"),
         titleTextStyle: const TextStyle(
           letterSpacing: 2,
           fontSize: 24,
@@ -53,74 +39,54 @@ class _HomeViewState extends State<HomeView> {
         elevation: 10,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.logout),
             onPressed: () async {
-              await _authService.signOut();
-              Get.offAll(() => const SigninView());
+              await _auth.signOut();
+              Get.offAll(() => SigninView());
             },
           ),
         ],
       ),
-      body: _todoList == null || _todoList!.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: _todoList!.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+      body: StreamBuilder(
+        stream: DatabaseService().usersSnapshot,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error = ${snapshot.error}'));
+          }
+          if (snapshot.hasData) {
+
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "name",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
                     ),
-                    color: Colors.white,
-                    margin: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: RichText(
-                            text: TextSpan(
-                              text: "Task name: \n",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: _todoList![index].title,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            _todoList![index].completed == true
-                                ? "Done!"
-                                : "Not done yet",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: _todoList![index].completed == true
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
+                  ),
+                  SizedBox(height: 56),
+                  Text(
+                    "Now playing: ",
+                    style: TextStyle(
+                      fontSize: 20,
                     ),
-                  );
-                },
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "On mission: ",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
-            ),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
