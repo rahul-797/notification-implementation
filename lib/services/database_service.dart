@@ -7,13 +7,14 @@ class DatabaseService {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection("users");
 
+  Future<QuerySnapshot> get usersSnapshot => usersCollection.get();
+
   Future updateUserData(String name, String game, int mission) async {
     await usersCollection.doc(_auth.currentUser!.uid).set({
-      "name": name,
+      "name" : name,
       "game": game,
       "mission": mission,
     });
   }
 
-  Stream<QuerySnapshot> get usersSnapshot => usersCollection.snapshots();
 }

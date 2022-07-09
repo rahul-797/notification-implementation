@@ -21,8 +21,11 @@ DatabaseModel _$DatabaseModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DatabaseModel {
   String get name => throw _privateConstructorUsedError;
+  set name(String value) => throw _privateConstructorUsedError;
   String get game => throw _privateConstructorUsedError;
+  set game(String value) => throw _privateConstructorUsedError;
   int get mission => throw _privateConstructorUsedError;
+  set mission(int value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -117,41 +120,23 @@ class __$$_DatabaseModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_DatabaseModel implements _DatabaseModel {
-  const _$_DatabaseModel(
+  _$_DatabaseModel(
       {required this.name, required this.game, required this.mission});
 
   factory _$_DatabaseModel.fromJson(Map<String, dynamic> json) =>
       _$$_DatabaseModelFromJson(json);
 
   @override
-  final String name;
+  String name;
   @override
-  final String game;
+  String game;
   @override
-  final int mission;
+  int mission;
 
   @override
   String toString() {
     return 'DatabaseModel(name: $name, game: $game, mission: $mission)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_DatabaseModel &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.game, game) &&
-            const DeepCollectionEquality().equals(other.mission, mission));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(game),
-      const DeepCollectionEquality().hash(mission));
 
   @JsonKey(ignore: true)
   @override
@@ -165,10 +150,10 @@ class _$_DatabaseModel implements _DatabaseModel {
 }
 
 abstract class _DatabaseModel implements DatabaseModel {
-  const factory _DatabaseModel(
-      {required final String name,
-      required final String game,
-      required final int mission}) = _$_DatabaseModel;
+  factory _DatabaseModel(
+      {required String name,
+      required String game,
+      required int mission}) = _$_DatabaseModel;
 
   factory _DatabaseModel.fromJson(Map<String, dynamic> json) =
       _$_DatabaseModel.fromJson;

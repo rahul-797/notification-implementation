@@ -3,9 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'database_model.freezed.dart';
 part 'database_model.g.dart';
 
-@freezed
+@unfreezed
 class DatabaseModel with _$DatabaseModel {
-  const factory DatabaseModel({
+  factory DatabaseModel({
     required String name,
     required String game,
     required int mission,
